@@ -1,61 +1,57 @@
-
-import { useForm } from 'react-hook-form'
+import { useDispatch } from "react-redux";
+import React, { useState } from 'react';
+import { onLogin } from '../features/userSlice'
+import { useNavigate } from "react-router-dom";
 
 const SingUp = () => {
-  const { register, handleSubmit } = useForm()
+    const [name, setName] = useState()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const dispatch = useDispatch()
+    let navigate = useNavigate();
 
-  const submitForm = (data) => {
-    if (data.password !== data.confirmPassword) {
-      console.log(data,"sfdhj");
-      return
+    function res() {
+        const obj = {
+            name,
+            email,
+            password
+        }
+        let arr1 = [];
+
+        if (localStorage.getItem('AllUserData')) {
+
+            arr1 = [...JSON.parse(localStorage.getItem('AllUserData'))]
+        }
+        arr1 = [...arr1, obj];
+        localStorage.setItem('AllUserData', JSON.stringify(arr1))
+
+        // localStorage.removeItem("AllUserData")
+
+        return arr1
     }
-    data.email = data.email.toLowerCase()
-    console.log(data)
-  }
-
-  return (
-    <form onSubmit={handleSubmit(submitForm)}>
-      <div className='form-group'>
-        <label htmlFor='firstName'>First Name</label>
-        <input
-          type='text'
-          className='form-input'
-          {...register('firstName')}
-          required
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='email'>Email</label>
-        <input
-          type='email'
-          className='form-input'
-          {...register('email')}
-          required
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='password'>Password</label>
-        <input
-          type='password'
-          className='form-input'
-          {...register('password')}
-          required
-        />
-      </div>
-      <div className='form-group'>
-        <label htmlFor='email'>Confirm Password</label>
-        <input
-          type='password'
-          className='form-input'
-          {...register('confirmPassword')}
-          required
-        />
-      </div>
-      <button type='submit' className='button'>
-        Login
-      </button>
-    </form>
-  )
+    console.log(res());
+    return (
+        <>
+            <div className="text-center mt-10">
+                <div> Name</div>
+                <input className="border border-slate-300" type="text" onChange={(e) => setName(e.target.value)} />
+                <div> Email</div>
+                <input className="border border-slate-300" type="text" onChange={(e) => setEmail(e.target.value)} />
+                <div> Pssword</div>
+                <input className="border border-slate-300" type="password" onChange={(e) => setPassword(e.target.value)} />
+                <div>Conform Pssword</div>
+                <input className="border border-slate-300" type="password" onChange={(e) => setPassword(e.target.value)} />
+                <div className="mt-6">
+                    {name && email && password ?
+                        <button className=" button" onClick={() => { dispatch(onLogin()); navigate("/") }} >Ragister </button>
+                        :
+                        <button className=" button" onClick={() => { dispatch(onLogin()); navigate("/singin") }} >Ragister </button>
+                    }
+                </div>
+                <div className="mt-6 ">Go To Login Page <a className="text-blue-500 hover:underline ml-6" href="/login">Login page</a></div>
+            </div>
+        </>
+    )
 }
 
 export default SingUp
