@@ -1,19 +1,30 @@
 import { useDispatch } from "react-redux";
-import React, { useState } from 'react';
-import { onLogin, onSingUp } from '../features/userSlice'
+import React, { useEffect, useState } from 'react';
+import { onLogin, check, onSignup } from '../features/userSlice'
 import { useNavigate } from "react-router-dom";
+import Signup from "./singup";
 
 
 function Login() {
+    const [email,setEmail]=useState("")
+    const [password,setPassword]=useState("")
     // const demo = useSelector((state) => state.user)
     const dispatch = useDispatch()
     let navigate = useNavigate();
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    function logiData() {
 
-    console.log(email, "DFg", password, "sdfgvjdkd")
-
+        // let array= JSON.parse('user')
+        let arr= localStorage.getItem('user')
+        console.log(typeof arr);    
+        const obj = {
+            email,
+            password
+        }
+        const check = JSON.parse(arr).filter((i)=> obj.email ===i.email && obj.password === i.password)
+        console.log(arr,"dghit",check);
+        return check
+    }
 
     return (
         <>
@@ -24,24 +35,14 @@ function Login() {
                 <input className="border border-slate-300" type="password" onChange={(e) => setPassword(e.target.value)} />
                 <div className="flex justify-center ">
                     <div className="mt-6">
-                        {email && password ? <button className=" button" onClick={() => {
-                            dispatch(onLogin())
-                            navigate("/")
-                        }} >Login </button>
-                            : <button className=" button" onClick={() => {
-                                dispatch(onLogin())
-                                navigate("/login")
-                            }} >
-                                Login
-                            </button>}
-
+                         <button className=" button" onClick={logiData}>Login </button>
                     </div>
                     <div className="mt-6 ml-4">
                         <button className=" button" onClick={() => {
-                            dispatch(onSingUp())
-                            navigate("/singin")
+                            dispatch(onSignup())
+                            navigate('/signup')
                         }} >
-                            SingUp
+                            signup
                         </button>
                     </div>
                 </div>

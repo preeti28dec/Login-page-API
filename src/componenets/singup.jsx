@@ -1,35 +1,36 @@
 import { useDispatch } from "react-redux";
-import React, { useState } from 'react';
-import { onLogin } from '../features/userSlice'
+import React, { useEffect, useState } from 'react';
+import { check, onLogin } from '../features/userSlice'
 import { useNavigate } from "react-router-dom";
 
-const SingUp = () => {
-    const [name, setName] = useState()
+
+const Signup = (props) => {
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const dispatch = useDispatch()
-    let navigate = useNavigate();
 
-    function res() {
+    function onSignUp() {
         const obj = {
             name,
             email,
-            password
+            password,
         }
-        let arr1 = [];
+        let arr1=[]
 
-        if (localStorage.getItem('AllUserData')) {
-
-            arr1 = [...JSON.parse(localStorage.getItem('AllUserData'))]
+        if (localStorage.getItem('user')){
+            arr1=[...JSON.parse(localStorage.getItem('user'))]
         }
-        arr1 = [...arr1, obj];
-        localStorage.setItem('AllUserData', JSON.stringify(arr1))
+        arr1=[...arr1,obj]
 
-        // localStorage.removeItem("AllUserData")
+        console.log(arr1);
+        
+        localStorage.setItem('user',JSON.stringify(arr1))
 
         return arr1
+
     }
-    console.log(res());
+    
+    console.log(onSignUp());
     return (
         <>
             <div className="text-center mt-10">
@@ -42,11 +43,7 @@ const SingUp = () => {
                 <div>Conform Pssword</div>
                 <input className="border border-slate-300" type="password" onChange={(e) => setPassword(e.target.value)} />
                 <div className="mt-6">
-                    {name && email && password ?
-                        <button className=" button" onClick={() => { dispatch(onLogin()); navigate("/") }} >Ragister </button>
-                        :
-                        <button className=" button" onClick={() => { dispatch(onLogin()); navigate("/singin") }} >Ragister </button>
-                    }
+                    <button className=" button" onClick={onSignUp} >Ragister </button>
                 </div>
                 <div className="mt-6 ">Go To Login Page <a className="text-blue-500 hover:underline ml-6" href="/login">Login page</a></div>
             </div>
@@ -54,4 +51,4 @@ const SingUp = () => {
     )
 }
 
-export default SingUp
+export default Signup

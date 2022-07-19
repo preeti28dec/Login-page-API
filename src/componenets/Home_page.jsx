@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
-import { useDispatch } from "react-redux";
-import { onLogout } from '../features/userSlice'
+import { useDispatch,useSelector } from "react-redux";
+import { onLogout,onLogin } from '../features/userSlice'
 import { useNavigate } from "react-router-dom";
 
 function HomePage() {
   var [date] = useState(new Date());
-  // const { authenticated } = useSelector((state) => state.user)
+  
   const dispatch = useDispatch()
   let navigate = useNavigate();
-
-
-
+  
 
   return (
     <>

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Login from './componenets/login'
 import HomePage from './componenets/Home_page'
 import './App.css'
-import SingUp from './componenets/singup';
+import Signup from './componenets/singup';
 
 function App() {
 
@@ -11,7 +11,7 @@ function App() {
   
   // let  userid = localStorage.getItem("token") == null ? false : true;
 
-  console.log("DDDD", authenticated)
+  // console.log("DDDD", authenticated)
 
   return (
     <Router>
@@ -22,7 +22,7 @@ function App() {
           <Route path='/login' element={<Login />} />
 
           {!authenticated && <Route path="*" element={<Navigate to="/login" replace />} />}
-          <Route path='singin' element={<SingUp/>}/>
+          <Route path='/signup' element={<Signup/>}/>
 
         </Routes>
       </main>
@@ -31,3 +31,6 @@ function App() {
 }
 
 export default App
+
+
+
