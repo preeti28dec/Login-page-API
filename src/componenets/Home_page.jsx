@@ -24,6 +24,8 @@ function HomePage() {
           </div>
         </div>
       </div>
+
+      
       <div className='text-center logout_button'>
         <button className=" button" onClick={() => { dispatch(onLogout()); navigate("/login") }} >
           Logout
